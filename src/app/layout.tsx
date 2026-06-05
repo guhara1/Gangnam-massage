@@ -28,22 +28,27 @@ export default function RootLayout({
               {navigation.map((item) =>
                 item.href === "/gangnam" ? (
                   <details key={item.href} className="group relative">
-                    <summary className="list-none rounded-md px-3 py-2 font-medium text-white outline-none hover:bg-[var(--panel)] hover:text-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+                    <summary className="list-none rounded-md px-3 py-2 font-medium text-white outline-none hover:bg-[var(--panel)] hover:text-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] group-open:bg-[var(--panel)] group-open:text-[var(--accent)]">
                       {item.label}
                     </summary>
-                    <div className="absolute left-0 top-full mt-2 grid w-48 gap-1 rounded-md border border-[var(--line)] bg-[var(--panel)] p-2 shadow-lg shadow-black/40 group-open:block">
-                      <Link className="rounded px-3 py-2 text-white hover:bg-black hover:text-[var(--accent)]" href="/gangnam">
-                        강남구 전체
-                      </Link>
-                      {gangnamAreas.map((area) => (
+                    <div className="absolute left-0 top-full mt-2 w-[360px] rounded-md border border-[var(--line)] bg-[var(--panel)] p-3 shadow-xl shadow-black/50">
+                      <div className="grid grid-cols-3 gap-2">
                         <Link
-                          key={area.slug}
-                          className="rounded px-3 py-2 text-white hover:bg-black hover:text-[var(--accent)]"
-                          href={`/gangnam/${area.slug}`}
+                          className="col-span-3 rounded border border-[var(--line)] px-3 py-2 text-center font-semibold text-white hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                          href="/gangnam"
                         >
-                          {area.name}
+                          강남구 전체
                         </Link>
-                      ))}
+                        {gangnamAreas.map((area) => (
+                          <Link
+                            key={area.slug}
+                            className="whitespace-nowrap rounded px-3 py-2 text-center text-white hover:bg-black hover:text-[var(--accent)]"
+                            href={`/gangnam/${area.slug}`}
+                          >
+                            {area.name}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </details>
                 ) : (
