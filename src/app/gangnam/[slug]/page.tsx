@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { PricingCards } from "@/components/pricing-cards";
 import { getAreaEditorial } from "@/lib/area-editorials";
+import { getAreaSeo } from "@/lib/area-seo";
 import { gangnamAreas, getArea, siteUrl } from "@/lib/areas";
 
 export const dynamic = "force-static";
@@ -24,15 +25,20 @@ export async function generateMetadata({ params }: AreaPageProps): Promise<Metad
     return {};
   }
 
+  const seo = getAreaSeo(area.slug);
+  const title = seo?.title ?? `${area.name} 출장마사지 홈타이 | 강남구 지역 안내`;
+  const description =
+    seo?.description ?? `${area.name} 출장마사지 홈타이 이용 전 생활권, 이동 동선, 요금 확인 기준을 안내합니다.`;
+
   return {
-    title: `${area.name} 출장마사지 홈타이 | 강남구 지역별 이용 안내`,
-    description: `${area.name} 출장마사지 홈타이 이용 전 확인할 수 있는 생활권, 이동 동선, 요금 확인 기준, 예약 전 주의사항을 정리했습니다.`,
+    title,
+    description,
     alternates: {
       canonical: siteUrl(`/gangnam/${area.slug}`),
     },
     openGraph: {
-      title: `${area.name} 출장마사지 홈타이 | 강남구 지역별 이용 안내`,
-      description: `${area.name} 생활권에 맞춘 예약 전 확인사항과 이용 기준을 안내합니다.`,
+      title,
+      description,
       url: siteUrl(`/gangnam/${area.slug}`),
       type: "article",
       locale: "ko_KR",
