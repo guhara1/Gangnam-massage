@@ -24,3 +24,11 @@ Use these settings for static hosting:
 If the site returns 404 at the root domain, check that the Cloudflare Pages build command is not empty. Without a build command, Cloudflare may deploy the repository root instead of the generated `out/` directory.
 
 Set `NEXT_PUBLIC_SITE_URL` to the production domain so sitemap, robots, and canonical URLs point to the deployed site.
+
+## IndexNow
+
+The site hosts the IndexNow verification key at:
+
+`https://gangnam-massage-5fy.pages.dev/e926d9ebeec34dd196aee0797ea4bf3d.txt`
+
+Run `npm run indexnow` to submit the current public URLs to IndexNow/Bing and Naver. A GitHub Actions workflow also runs on every push to `main`, waits for the key file to be live on Cloudflare Pages, and then sends the update notification.

@@ -1,4 +1,4 @@
-export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gangnam-care-guide.vercel.app";
+export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gangnam-massage-5fy.pages.dev";
 
 export function siteUrl(path: string) {
   const normalized = path === "/" ? "" : path;
