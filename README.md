@@ -23,6 +23,4 @@ Use these settings for static hosting:
 
 If the site returns 404 at the root domain, check that the Cloudflare Pages build command is not empty. Without a build command, Cloudflare may deploy the repository root instead of the generated `out/` directory.
 
-This repository also includes `wrangler.toml` with `pages_build_output_dir = "out"` for Cloudflare Pages.
-
 Set `NEXT_PUBLIC_SITE_URL` to the production domain so sitemap, robots, and canonical URLs point to the deployed site.
