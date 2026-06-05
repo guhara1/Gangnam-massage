@@ -25,6 +25,7 @@ const paths = [
   "/guide/",
   "/reviews/",
   "/contact/",
+  "/rss.xml",
 ];
 
 const urlList = paths.map((path) => new URL(path, site).toString());

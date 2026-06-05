@@ -25,6 +25,13 @@ If the site returns 404 at the root domain, check that the Cloudflare Pages buil
 
 Set `NEXT_PUBLIC_SITE_URL` to the production domain so sitemap, robots, and canonical URLs point to the deployed site.
 
+Generated discovery files:
+
+- Sitemap: `https://gangnam-massage-5fy.pages.dev/sitemap.xml`
+- RSS: `https://gangnam-massage-5fy.pages.dev/rss.xml`
+- Robots: `https://gangnam-massage-5fy.pages.dev/robots.txt`
+- Naver verification meta: `621007e6fdab98f3ffa54fa0686bb423f77cc0c3`
+
 ## IndexNow
 
 The site hosts the IndexNow verification key at:

@@ -4,17 +4,25 @@ import "./globals.css";
 import { FloatingCallButton } from "@/components/floating-call-button";
 import { HeaderNav } from "@/components/header-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { baseUrl, gangnamAreas, navigation } from "@/lib/areas";
+import { baseUrl, gangnamAreas, navigation, siteUrl } from "@/lib/areas";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   applicationName: "Gangnam Care Guide",
+  alternates: {
+    types: {
+      "application/rss+xml": siteUrl("/rss.xml"),
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32" },
       { url: "/favicon.svg", type: "image/svg+xml" },
     ],
     apple: "/apple-touch-icon.svg",
+  },
+  other: {
+    "naver-site-verification": "621007e6fdab98f3ffa54fa0686bb423f77cc0c3",
   },
 };
 
