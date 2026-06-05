@@ -3,6 +3,7 @@ import Link from "next/link";
 import "./globals.css";
 import { FloatingCallButton } from "@/components/floating-call-button";
 import { HeaderNav } from "@/components/header-nav";
+import { SiteFooter } from "@/components/site-footer";
 import { baseUrl, gangnamAreas, navigation } from "@/lib/areas";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function RootLayout({
           </div>
         </header>
         {children}
+        <SiteFooter />
         <FloatingCallButton />
       </body>
     </html>
