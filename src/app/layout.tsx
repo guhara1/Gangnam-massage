@@ -28,7 +28,7 @@ export default function RootLayout({
               {navigation.map((item) =>
                 item.href === "/gangnam" ? (
                   <details key={item.href} className="group relative">
-                    <summary className="list-none rounded-md px-3 py-2 font-medium text-white outline-none hover:bg-[var(--panel)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+                    <summary className="list-none rounded-md px-3 py-2 font-medium text-white outline-none hover:bg-[var(--panel)] hover:text-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
                       {item.label}
                     </summary>
                     <div className="absolute left-0 top-full mt-2 grid w-48 gap-1 rounded-md border border-[var(--line)] bg-[var(--panel)] p-2 shadow-lg shadow-black/40 group-open:block">
