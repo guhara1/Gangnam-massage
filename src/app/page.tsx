@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
+import { PricingCards } from "@/components/pricing-cards";
 import { gangnamAreas, siteUrl } from "@/lib/areas";
 
 export const dynamic = "force-static";
@@ -209,6 +210,8 @@ export default function HomePage() {
               ))}
             </div>
           </section>
+
+          <PricingCards />
 
           <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-md border border-[var(--line)] bg-[var(--panel)] p-6">
