@@ -10,7 +10,7 @@ export function PricingCards() {
       </p>
       <h2 className="mt-2 text-2xl font-semibold text-white">코스별 기본 요금</h2>
       <p className="mt-3 leading-7 text-[#d8d0c1]">
-        60·90·120분 코스별 기본 요금입니다. 지역, 예약 시간대, 이동 거리에 따라 상담 시 최종 확인됩니다.
+        60분, 90분, 120분 기준 기본 요금입니다. 지역, 예약 시간대, 이동 거리, 이용 장소 조건에 따라 상담 시 최종 확인됩니다.
       </p>
       <div className="mt-8 grid gap-5 lg:grid-cols-3">
         {pricingPlans.map((plan) => (
@@ -48,7 +48,7 @@ export function PricingCards() {
         ))}
       </div>
       <p className="mt-6 text-sm leading-7 text-[#d8d0c1]">
-        지역·예약 시간대·이동 거리에 따라 상담 시 최종 확인됩니다.{" "}
+        지역, 예약 시간대, 이동 거리 조건에 따라 상담 시 최종 확인됩니다.{" "}
         <Link href="/pricing" className="font-semibold text-[#d6b56d] hover:text-[#f0d58a]">
           상세 요금 안내 보기
         </Link>

@@ -48,7 +48,7 @@ export function EditorialPage({
               <span className="h-px w-14 bg-[#c9a45f]" />
               {eyebrow}
             </div>
-            <h1 className="max-w-5xl text-[clamp(2.6rem,5.8vw,5.8rem)] font-black leading-[0.98] tracking-[0] text-white">
+            <h1 className="max-w-5xl text-[clamp(2.4rem,5.2vw,5rem)] font-black leading-[1.03] tracking-[0] text-white">
               {title}
             </h1>
             <p className="mt-8 max-w-3xl border-l border-[#c9a45f] pl-6 text-lg leading-8 text-white sm:text-xl">
@@ -92,7 +92,7 @@ export function EditorialPage({
       <section className="border-y border-[#2b2618] bg-[#090907]">
         <div className="mx-auto max-w-5xl px-5 py-16 text-center sm:px-8 lg:py-24">
           <p className="text-sm font-bold text-[#c9a45f]">EDITORIAL NOTE</p>
-          <blockquote className="mt-6 text-3xl font-black leading-tight text-white sm:text-5xl">“{quote}”</blockquote>
+          <blockquote className="mt-6 text-3xl font-black leading-tight text-white sm:text-5xl">{quote}</blockquote>
         </div>
       </section>
 

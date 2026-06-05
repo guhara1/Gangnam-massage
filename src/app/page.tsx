@@ -6,9 +6,9 @@ import { gangnamAreas, siteUrl } from "@/lib/areas";
 
 export const dynamic = "force-static";
 
-const pageTitle = "강남 출장마사지 | 합법 방문 마사지 예약 안내 - Gangnam Care Guide";
+const pageTitle = "강남 출장마사지 홈타이 | 강남구 지역별 이용 안내";
 const pageDescription =
-  "강남구 역삼·논현·삼성·청담 권역 방문 마사지 예약 안내. 코스, 요금, 가능 지역, 취소 규정을 투명하게 확인하세요.";
+  "강남 출장마사지 홈타이 이용 전 확인할 수 있는 강남구 주요 지역, 이용 절차, 요금 안내, 예약 전 주의사항을 정리했습니다.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -18,42 +18,42 @@ export const metadata: Metadata = {
   },
 };
 
-const serviceCourses = [
+const trustItems = [
+  "건전 관리 범위와 불가 요청을 예약 전 명확히 안내합니다.",
+  "방문 가능 여부는 정확한 주소와 시간대를 기준으로 확인합니다.",
+  "총 비용, 취소 규정, 준비사항은 예약 확정 전에 안내합니다.",
+  "호텔, 오피스텔, 주거지별 출입 규정을 우선합니다.",
+];
+
+const courses = [
   {
     title: "아로마 릴렉스 관리",
-    description: "오일 기반의 부드러운 리듬으로 몸의 긴장을 낮추고 조용한 휴식을 돕는 코스입니다.",
+    description: "오일 기반의 부드러운 관리로 짧은 휴식과 컨디션 정리에 맞춘 구성입니다.",
     time: "60분 / 90분 / 120분",
   },
   {
     title: "스포츠 바디케어",
-    description: "목, 어깨, 허리처럼 피로가 쌓이기 쉬운 부위를 중심으로 진행하는 바디케어입니다.",
+    description: "목, 어깨, 허리처럼 피로가 쌓이기 쉬운 부위를 중심으로 안내하는 구성입니다.",
     time: "60분 / 90분",
   },
   {
     title: "프리미엄 회복 관리",
-    description: "출장, 장거리 이동, 늦은 업무 후 충분한 시간을 두고 맞춤 상담으로 구성하는 코스입니다.",
+    description: "출장, 장거리 이동, 야근 후 충분한 시간을 두고 쉬고 싶은 분에게 맞춘 구성입니다.",
     time: "90분 / 120분",
   },
-];
-
-const trustItems = [
-  "건전 관리 범위와 불가 요청을 예약 전 명확히 안내합니다.",
-  "방문 가능 여부는 정확한 주소와 시간대 기준으로 확인합니다.",
-  "총 비용, 취소 규정, 준비사항은 확정 전에 안내합니다.",
-  "호텔, 오피스텔, 자택 등 장소별 출입 규정을 우선합니다.",
 ];
 
 const processSteps = [
   { title: "문의", text: "지역, 희망 시간, 이용 장소 유형을 먼저 확인합니다." },
   { title: "조건 확인", text: "주소, 출입 방식, 주차 가능 여부, 이동 시간을 점검합니다." },
-  { title: "코스 선택", text: "관리 목적과 소요 시간을 기준으로 코스를 정합니다." },
+  { title: "코스 선택", text: "관리 목적과 필요한 시간을 기준으로 코스를 정합니다." },
   { title: "방문 진행", text: "안내된 범위 안에서 합법적이고 건전하게 진행합니다." },
 ];
 
 const faqs = [
   {
     question: "강남 전 지역 방문 가능한가요?",
-    answer: "강남구 대부분 지역은 가능하지만 시간대와 정확한 주소에 따라 가능 여부가 달라질 수 있습니다.",
+    answer: "강남구 대부분 지역은 상담 가능하지만, 정확한 주소와 시간대에 따라 방문 가능 여부가 달라질 수 있습니다.",
   },
   {
     question: "호텔이나 오피스텔도 가능한가요?",
@@ -61,11 +61,11 @@ const faqs = [
   },
   {
     question: "어떤 요청은 불가한가요?",
-    answer: "건전 마사지 외 위법하거나 성적 성격의 요청은 진행하지 않으며, 해당 요청이 있으면 예약이 취소될 수 있습니다.",
+    answer: "건전 관리 범위를 벗어난 위법하거나 선정적인 요청은 진행하지 않으며 예약이 취소될 수 있습니다.",
   },
   {
     question: "가격은 어떻게 확인하나요?",
-    answer: "코스, 시간, 방문 지역, 이동 여건에 따라 예약 전 총 비용을 안내합니다.",
+    answer: "코스, 시간, 방문 지역, 이동 조건을 확인한 뒤 예약 전 총 비용을 안내합니다.",
   },
 ];
 
@@ -77,28 +77,11 @@ export default function HomePage() {
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "WebPage",
-              name: pageTitle,
-              url: siteUrl("/"),
-              description: pageDescription,
-              inLanguage: "ko-KR",
-            },
-            {
-              "@type": "Service",
-              name: "강남 방문 마사지 예약 안내",
-              serviceType: "방문 마사지 예약 안내",
-              areaServed: {
-                "@type": "AdministrativeArea",
-                name: "서울특별시 강남구",
-              },
-              provider: {
-                "@type": "Organization",
-                name: "Gangnam Care Guide",
-              },
-            },
-          ],
+          "@type": "WebPage",
+          name: pageTitle,
+          url: siteUrl("/"),
+          description: pageDescription,
+          inLanguage: "ko-KR",
         }}
       />
 
@@ -110,25 +93,18 @@ export default function HomePage() {
               <span className="h-px w-14 bg-[#c9a45f]" />
               합법 방문 마사지 예약 안내
             </div>
-            <h1 className="max-w-5xl text-[clamp(2.6rem,5.8vw,6.1rem)] font-black leading-[0.98] tracking-[0] text-white">
-              강남 출장마사지
-              <span className="mt-3 block text-[#d6b56d]">집과 호텔에서 받는 합법 방문 마사지</span>
+            <h1 className="max-w-5xl text-[clamp(2.5rem,5.4vw,5.4rem)] font-black leading-[1.02] tracking-[0] text-white">
+              강남 출장마사지 홈타이,
+              <span className="mt-3 block text-[#d6b56d]">지역별 이용 안내</span>
             </h1>
             <p className="mt-8 max-w-3xl border-l border-[#c9a45f] pl-6 text-lg leading-8 text-white sm:text-xl">
-              강남 출장마사지 예약 전 코스, 요금, 관리 범위, 취소 규정을 투명하게 확인할 수 있도록
-              역삼·논현·삼성·청담 권역 중심의 방문 가능 기준을 정리했습니다.
+              강남구에서 예약 전 살펴볼 수 있는 생활권 정보, 이동 여건, 확인 절차, 요금 안내를 한곳에 정리했습니다.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/contact"
-                className="rounded-full bg-[#d6b56d] px-7 py-4 text-sm font-bold text-black hover:bg-[#f0d58a]"
-              >
+              <Link href="/contact" className="rounded-full bg-[#d6b56d] px-7 py-4 text-sm font-bold text-black hover:bg-[#f0d58a]">
                 예약 문의
               </Link>
-              <Link
-                href="/pricing"
-                className="rounded-full border border-[#8e7440] px-7 py-4 text-sm font-bold text-[#f0d58a] hover:border-[#d6b56d] hover:bg-[#11100b]"
-              >
+              <Link href="/pricing" className="rounded-full border border-[#8e7440] px-7 py-4 text-sm font-bold text-[#f0d58a] hover:border-[#d6b56d] hover:bg-[#11100b]">
                 코스와 요금 보기
               </Link>
             </div>
@@ -140,19 +116,14 @@ export default function HomePage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="text-sm font-bold text-[#c9a45f]">EDITORIAL GUIDE</p>
-            <h2 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">
-              예약 전에 알아야 할 기준을 먼저 보여드립니다.
-            </h2>
+            <h2 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">예약 전에 알아야 할 기준을 먼저 보여드립니다.</h2>
           </div>
           <div className="space-y-6 text-lg leading-9 text-[#e8e2d6]">
             <p className="text-2xl leading-10 text-white">
-              이 페이지는 자극적인 문구로 클릭을 유도하기보다, 강남구에서 방문 관리를 예약하기 전 실제로 확인해야 할
-              정보만 정리한 신뢰형 랜딩 페이지입니다.
+              이 페이지는 검색 키워드를 반복하기 위한 문서가 아니라, 강남구 안에서 실제 이용 장소를 정하기 전 확인해야 할 기준을 정리한 안내 허브입니다.
             </p>
             <p>
-              운영 범위, 코스별 시간, 요금 확인 방식, 방문 가능 지역, 취소 기준, 불가 요청을 한 화면에서 비교할 수
-              있도록 구성했습니다. 장소와 시간에 따라 가능 여부가 달라질 수 있으므로 확정 전에는 정확한 주소 기준으로
-              상담을 진행합니다.
+              운영 범위, 코스별 시간, 요금 확인 방식, 방문 가능 지역, 취소 기준, 불가 요청을 한 화면에서 비교할 수 있도록 구성했습니다. 정확한 주소와 시간대에 따라 가능 여부가 달라질 수 있으므로 예약 전 상담을 기준으로 최종 확인합니다.
             </p>
           </div>
         </div>
@@ -180,7 +151,7 @@ export default function HomePage() {
           </p>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
-          {serviceCourses.map((course) => (
+          {courses.map((course) => (
             <article key={course.title} className="rounded-md border border-[#2b2618] bg-[#0b0d09] p-7">
               <h3 className="text-2xl font-black text-[#d6b56d]">{course.title}</h3>
               <p className="mt-5 min-h-28 text-base leading-8 text-white">{course.description}</p>
@@ -198,19 +169,14 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
           <div>
             <p className="text-sm font-bold text-[#c9a45f]">AREA</p>
-            <h2 className="mt-3 text-4xl font-black leading-tight text-white">강남 방문 가능 지역</h2>
+            <h2 className="mt-3 text-4xl font-black leading-tight text-white">강남구 지역별 안내</h2>
             <p className="mt-6 text-lg leading-9 text-[#d8d0c1]">
-              강남구 내 역삼동, 논현동, 삼성동, 청담동, 대치동, 신사동, 압구정동 일부 지역 방문이 가능합니다.
-              정확한 주소와 시간대 기준으로 가능 여부를 확인합니다.
+              동별 페이지는 지역명만 바꾼 복사 문서가 아니라, 생활권과 이동 동선, 예약 전 확인사항을 다르게 정리했습니다.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {visibleAreas.map((area) => (
-              <Link
-                key={area.slug}
-                href={`/gangnam/${area.slug}`}
-                className="rounded-md border border-[#2b2618] bg-[#050503] px-5 py-4 text-center font-bold text-white hover:border-[#d6b56d] hover:text-[#d6b56d]"
-              >
+              <Link key={area.slug} href={`/gangnam/${area.slug}`} className="rounded-md border border-[#2b2618] bg-[#050503] px-5 py-4 text-center font-bold text-white hover:border-[#d6b56d] hover:text-[#d6b56d]">
                 {area.name}
               </Link>
             ))}
@@ -238,11 +204,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl px-5 py-16 text-center sm:px-8 lg:py-24">
           <p className="text-sm font-bold text-[#c9a45f]">POLICY</p>
           <blockquote className="mt-6 text-3xl font-black leading-tight text-white sm:text-5xl">
-            “건전 관리 범위 밖의 요청은 진행하지 않습니다.”
+            건전한 관리 범위 밖의 요청은 진행하지 않습니다.
           </blockquote>
           <p className="mx-auto mt-8 max-w-3xl text-lg leading-9 text-[#d8d0c1]">
-            성적 성격의 요청, 위법 행위, 과도한 요구가 있을 경우 예약은 취소될 수 있습니다. 이용 장소의 규정과
-            주변 환경을 존중하는 것을 기본 원칙으로 합니다.
+            위법하거나 선정적인 요청, 과도한 요구가 있을 경우 예약은 취소될 수 있습니다. 이용 장소의 규정과 주변 환경을 존중하는 것을 기본 원칙으로 합니다.
           </p>
         </div>
       </section>
