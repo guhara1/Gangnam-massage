@@ -68,17 +68,17 @@ export default async function AreaPage({ params }: AreaPageProps) {
 
       <section className="relative overflow-hidden border-b border-[#2b2618]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(183,143,74,0.18),transparent_32rem),linear-gradient(135deg,#0a0d09_0%,#050503_62%,#000_100%)]" />
-        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+        <div className="relative mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:py-20">
           <div className="max-w-4xl">
             <div className="mb-8 flex items-center gap-4 text-sm font-semibold text-[#c9a45f]">
               <span className="h-px w-14 bg-[#c9a45f]" />
               강남구 지역 안내
             </div>
-            <h1 className="max-w-5xl text-[clamp(2.6rem,5.8vw,5.8rem)] font-black leading-[0.98] tracking-[0] text-white">
+            <h1 className="max-w-5xl text-[clamp(2.4rem,5vw,4.8rem)] font-black leading-[1.02] tracking-[0] text-white">
               {area.name}
-              <span className="mt-3 block text-[#d6b56d]">출장마사지 홈타이 안내</span>
+              <span className="mt-3 block text-[clamp(2rem,4.2vw,3.8rem)] text-[#d6b56d]">출장마사지 홈타이 안내</span>
             </h1>
-            <p className="mt-8 max-w-3xl border-l border-[#c9a45f] pl-6 text-lg leading-8 text-white sm:text-xl">
+            <p className="mt-7 max-w-3xl border-l border-[#c9a45f] pl-6 text-base leading-8 text-white sm:text-lg">
               {description}
             </p>
           </div>
