@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   applicationName: "Gangnam Care Guide",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
     apple: "/apple-touch-icon.svg",
   },
 };
