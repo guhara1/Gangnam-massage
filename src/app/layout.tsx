@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { FloatingCallButton } from "@/components/floating-call-button";
 import { baseUrl, gangnamAreas, navigation } from "@/lib/areas";
 
 export const metadata: Metadata = {
@@ -65,6 +66,7 @@ export default function RootLayout({
           </div>
         </header>
         {children}
+        <FloatingCallButton />
       </body>
     </html>
   );
