@@ -51,13 +51,27 @@ const guideItems: NavChild[] = [
   { label: "자주 묻는 질문", href: "/guide", description: "처음 이용 전 확인" },
 ];
 
-export function HeaderNav({ areas, navigation }: HeaderNavProps) {
+export function HeaderNav({ areas }: HeaderNavProps) {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsOpen(false);
+    setMobileOpen(false);
+    setActiveMenu(null);
   }, [pathname]);
+
+  useEffect(() => {
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setActiveMenu(null);
+        setMobileOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
 
   const regionItems = areas.map((area) => ({
     label: area.name,
@@ -67,78 +81,107 @@ export function HeaderNav({ areas, navigation }: HeaderNavProps) {
 
   const groups: NavGroup[] = [
     { label: "홈", href: "/" },
-    { label: "지역별", href: "/gangnam", wide: true, children: [{ label: "강남구 전체", href: "/gangnam", description: "전체 생활권 안내" }, ...regionItems] },
+    {
+      label: "지역별",
+      href: "/gangnam",
+      wide: true,
+      children: [{ label: "강남구 전체", href: "/gangnam", description: "전체 생활권 안내" }, ...regionItems],
+    },
     { label: "코스별", href: "/service", wide: true, children: courseItems },
     { label: "가격별", href: "/pricing", children: priceItems },
     { label: "이용가이드", href: "/guide", children: guideItems },
     { label: "실시간 후기", href: "/reviews" },
   ];
 
+  function closeMenus() {
+    setActiveMenu(null);
+    setMobileOpen(false);
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
+
   return (
     <>
       <button
         type="button"
-        aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
-        aria-expanded={isOpen}
+        aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
+        aria-expanded={mobileOpen}
         className="ml-auto flex flex-col gap-1.5 rounded-md p-2 text-white md:hidden"
-        onClick={() => setIsOpen((current) => !current)}
+        onClick={() => setMobileOpen((current) => !current)}
       >
         <span className="block h-0.5 w-6 bg-current" />
         <span className="block h-0.5 w-6 bg-current" />
         <span className="block h-0.5 w-6 bg-current" />
       </button>
 
-      <nav
-        aria-label="주요 메뉴"
-        className={[
-          "w-full md:w-auto md:flex-1",
-          isOpen ? "block" : "hidden md:block",
-        ].join(" ")}
-      >
+      <nav aria-label="주요 메뉴" className={["w-full md:w-auto md:flex-1", mobileOpen ? "block" : "hidden md:block"].join(" ")}>
         <ul className="flex flex-col gap-1 py-3 md:flex-row md:items-center md:justify-end md:gap-1 md:py-0">
-          {groups.map((group) => (
-            <li key={group.href} className="group relative">
-              <Link
-                href={group.href}
-                className="relative flex items-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-[#9aa7b4] transition hover:text-white md:h-[68px] md:py-0"
-                onClick={() => setIsOpen(false)}
-              >
-                {group.label}
-                {group.children ? <span className="mt-[-3px] text-xs transition group-hover:rotate-180">⌄</span> : null}
-                <span className="absolute bottom-3 left-4 right-4 hidden h-px origin-left scale-x-0 bg-[#d4a574] transition group-hover:scale-x-100 md:block" />
-              </Link>
+          {groups.map((group) => {
+            const isActive = activeMenu === group.label;
 
-              {group.children ? (
-                <div
-                  className={[
-                    "static rounded-lg border border-[#28323e] bg-[#161d26] p-2 shadow-2xl shadow-black/40 md:invisible md:absolute md:left-0 md:top-full md:z-50 md:translate-y-2 md:opacity-0 md:transition md:group-hover:visible md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-within:visible md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100",
-                    group.wide ? "md:w-[520px]" : "md:w-[260px]",
-                  ].join(" ")}
+            return (
+              <li
+                key={group.href}
+                className="relative"
+                onMouseEnter={() => group.children && setActiveMenu(group.label)}
+                onMouseLeave={() => group.children && setActiveMenu(null)}
+              >
+                <Link
+                  href={group.href}
+                  aria-haspopup={group.children ? "menu" : undefined}
+                  aria-expanded={group.children ? isActive : undefined}
+                  className="relative flex items-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-[#9aa7b4] transition hover:text-white md:h-[68px] md:py-0"
+                  onFocus={() => group.children && setActiveMenu(group.label)}
+                  onClick={closeMenus}
                 >
-                  <ul className={group.wide ? "grid gap-1 md:grid-cols-2" : "grid gap-1"}>
-                    {group.children.map((child) => (
-                      <li key={`${group.label}-${child.label}`}>
-                        <Link
-                          href={child.href}
-                          className="block rounded-md px-3 py-2 text-sm font-semibold text-[#d8d0c1] transition hover:bg-[#1e2732] hover:text-[#d4a574]"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {child.label}
-                          {child.description ? <small className="mt-1 block text-xs font-normal text-[#7f8b96]">{child.description}</small> : null}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </li>
-          ))}
+                  {group.label}
+                  {group.children ? <span className={["mt-[-3px] text-xs transition", isActive ? "rotate-180" : ""].join(" ")}>⌄</span> : null}
+                  <span
+                    className={[
+                      "absolute bottom-3 left-4 right-4 hidden h-px origin-left bg-[#d4a574] transition md:block",
+                      isActive ? "scale-x-100" : "scale-x-0",
+                    ].join(" ")}
+                  />
+                </Link>
+
+                {group.children ? (
+                  <div
+                    className={[
+                      "static rounded-lg border border-[#28323e] bg-[#161d26] p-2 shadow-2xl shadow-black/40 md:absolute md:left-0 md:top-full md:z-50 md:transition",
+                      group.wide ? "md:w-[520px]" : "md:w-[260px]",
+                      mobileOpen || isActive
+                        ? "block md:visible md:translate-y-0 md:opacity-100"
+                        : "hidden md:invisible md:block md:translate-y-2 md:opacity-0",
+                    ].join(" ")}
+                  >
+                    <ul className={group.wide ? "grid gap-1 md:grid-cols-2" : "grid gap-1"}>
+                      {group.children.map((child) => (
+                        <li key={`${group.label}-${child.label}`}>
+                          <Link
+                            href={child.href}
+                            className="block rounded-md px-3 py-2 text-sm font-semibold text-[#d8d0c1] transition hover:bg-[#1e2732] hover:text-[#d4a574]"
+                            onMouseDown={() => setActiveMenu(null)}
+                            onClick={closeMenus}
+                          >
+                            {child.label}
+                            {child.description ? <small className="mt-1 block text-xs font-normal text-[#7f8b96]">{child.description}</small> : null}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       </nav>
 
       <Link
         href="/contact"
         className="hidden rounded-md bg-[#d4a574] px-5 py-3 text-sm font-bold text-[#1a130a] transition hover:-translate-y-0.5 hover:bg-[#e3b888] lg:inline-flex"
+        onClick={closeMenus}
       >
         업체 등록 문의
       </Link>
