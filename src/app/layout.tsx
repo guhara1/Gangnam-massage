@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { FloatingCallButton } from "@/components/floating-call-button";
+import { HeaderNav } from "@/components/header-nav";
 import { baseUrl, gangnamAreas, navigation } from "@/lib/areas";
 
 export const metadata: Metadata = {
@@ -25,44 +26,7 @@ export default function RootLayout({
             <Link href="/" className="text-lg font-bold tracking-[0] text-[var(--accent)]">
               Gangnam Care Guide
             </Link>
-            <nav aria-label="상단 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
-              {navigation.map((item) =>
-                item.href === "/gangnam" ? (
-                  <details key={item.href} className="group relative">
-                    <summary className="list-none rounded-md px-3 py-2 font-medium text-white outline-none hover:bg-[var(--panel)] hover:text-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] group-open:bg-[var(--panel)] group-open:text-[var(--accent)]">
-                      {item.label}
-                    </summary>
-                    <div className="absolute left-0 top-full mt-2 w-[360px] rounded-md border border-[var(--line)] bg-[var(--panel)] p-3 shadow-xl shadow-black/50">
-                      <div className="grid grid-cols-3 gap-2">
-                        <Link
-                          className="col-span-3 rounded border border-[var(--line)] px-3 py-2 text-center font-semibold text-white hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                          href="/gangnam"
-                        >
-                          강남구 전체
-                        </Link>
-                        {gangnamAreas.map((area) => (
-                          <Link
-                            key={area.slug}
-                            className="whitespace-nowrap rounded px-3 py-2 text-center text-white hover:bg-black hover:text-[var(--accent)]"
-                            href={`/gangnam/${area.slug}`}
-                          >
-                            {area.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </details>
-                ) : (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="rounded-md px-3 py-2 font-medium text-white hover:bg-[var(--panel)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-                  >
-                    {item.label}
-                  </Link>
-                ),
-              )}
-            </nav>
+            <HeaderNav areas={gangnamAreas} navigation={navigation} />
           </div>
         </header>
         {children}
