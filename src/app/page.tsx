@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { AreaLinkGrid, InfoBand, PageHero } from "@/components/page-sections";
+import { AreaLinkGrid, InfoBand, LongFormSection, PageHero } from "@/components/page-sections";
 import { gangnamAreas, siteUrl } from "@/lib/areas";
+import { homeLongForm } from "@/lib/content";
 
 export const dynamic = "force-static";
 
@@ -35,6 +36,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="content-grid">
           <div className="space-y-8">
+            <LongFormSection title="강남구 이용 전 상세 안내" paragraphs={homeLongForm} />
             <InfoBand
               title="처음 확인하면 좋은 기준"
               items={[
@@ -45,15 +47,15 @@ export default function HomePage() {
             />
             <AreaLinkGrid areas={gangnamAreas} />
           </div>
-          <aside className="rounded-md border border-[var(--line)] bg-white p-5">
-            <h2 className="text-xl font-semibold">빠른 안내</h2>
+          <aside className="rounded-md border border-[var(--line)] bg-[var(--panel)] p-5">
+            <h2 className="text-xl font-semibold text-[var(--accent-strong)]">빠른 안내</h2>
             <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
               강남구 전체 페이지에서 공통 절차를 먼저 확인한 뒤, 실제 이용 장소와 가까운 동별 안내를 살펴보면
               이동 동선과 예약 전 체크 항목을 더 구체적으로 비교할 수 있습니다.
             </p>
             <Link
               href="/gangnam"
-              className="mt-5 inline-flex rounded-md bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white hover:bg-[var(--accent-strong)]"
+              className="mt-5 inline-flex rounded-md bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-black hover:bg-[var(--accent-strong)]"
             >
               강남구 전체 보기
             </Link>

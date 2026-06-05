@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { AreaLinkGrid, DetailSection, FaqList, PageHero } from "@/components/page-sections";
+import { AreaLinkGrid, DetailSection, FaqList, LongFormSection, PageHero } from "@/components/page-sections";
 import { gangnamAreas, gangnamOverview, siteUrl } from "@/lib/areas";
+import { gangnamLongForm } from "@/lib/content";
 
 export const dynamic = "force-static";
 
@@ -38,6 +39,7 @@ export default function GangnamPage() {
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="content-grid">
           <div className="space-y-6">
+            <LongFormSection title="강남구 전체 이용 상세 가이드" paragraphs={gangnamLongForm} />
             <DetailSection
               title="생활권별 확인 포인트"
               items={[

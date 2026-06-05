@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
-import { DetailSection, FaqList, PageHero } from "@/components/page-sections";
+import { DetailSection, FaqList, LongFormSection, PageHero } from "@/components/page-sections";
 import { gangnamAreas, getArea, siteUrl } from "@/lib/areas";
+import { buildAreaLongForm } from "@/lib/content";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -67,6 +68,7 @@ export default async function AreaPage({ params }: AreaPageProps) {
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="content-grid">
           <div className="space-y-6">
+            <LongFormSection title={`${area.name} 지역 상세 가이드`} paragraphs={buildAreaLongForm(area)} />
             <DetailSection title="생활권" items={area.neighborhoods} />
             <DetailSection title="이용 상황" items={area.situations} />
             <DetailSection title="이동 동선" items={area.routeNotes} />
