@@ -29,7 +29,7 @@ export function PricingCards() {
             <h3 className="text-lg font-bold text-white">{plan.name}</h3>
             <div className="mt-5 flex items-end justify-center gap-1">
               <strong className="text-4xl font-black tracking-[0] text-white sm:text-5xl">{plan.price}</strong>
-              <span className="pb-2 text-sm font-semibold text-[var(--muted)]">원</span>
+              <span className="pb-2 text-sm font-semibold text-[#d8d0c1]">원</span>
             </div>
             <p className="mt-4 font-bold text-[#d6b56d]">{plan.minutes}</p>
             <p className="mt-2 text-sm text-[#d8d0c1]">{plan.description}</p>
