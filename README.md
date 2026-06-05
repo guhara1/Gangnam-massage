@@ -15,7 +15,8 @@ The static export is generated in `out/`.
 
 Use these settings for static hosting:
 
-- Build command: `npm run build`
+- Framework preset: `Next.js (Static HTML Export)`
+- Build command: `npx next build`
 - Install command: `npm install`
 - Output directory: `out`
 - Node.js: `20.9` or newer
