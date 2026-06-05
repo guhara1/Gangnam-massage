@@ -104,17 +104,17 @@ export default function HomePage() {
 
       <section className="relative overflow-hidden border-b border-[#2b2618]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(183,143,74,0.20),transparent_34rem),linear-gradient(135deg,#0a0d09_0%,#050503_62%,#000_100%)]" />
-        <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
-          <div className="max-w-5xl">
+        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+          <div className="max-w-4xl">
             <div className="mb-8 flex items-center gap-4 text-sm font-semibold text-[#c9a45f]">
               <span className="h-px w-14 bg-[#c9a45f]" />
               합법 방문 마사지 예약 안내
             </div>
-            <h1 className="max-w-6xl text-[clamp(3rem,8vw,8.5rem)] font-black leading-[0.9] tracking-[0] text-white">
+            <h1 className="max-w-5xl text-[clamp(2.6rem,5.8vw,6.1rem)] font-black leading-[0.98] tracking-[0] text-white">
               강남 출장마사지
-              <span className="mt-4 block text-[#d6b56d]">집과 호텔에서 받는 합법 방문 마사지</span>
+              <span className="mt-3 block text-[#d6b56d]">집과 호텔에서 받는 합법 방문 마사지</span>
             </h1>
-            <p className="mt-10 max-w-3xl border-l border-[#c9a45f] pl-6 text-xl leading-9 text-white sm:text-2xl">
+            <p className="mt-8 max-w-3xl border-l border-[#c9a45f] pl-6 text-lg leading-8 text-white sm:text-xl">
               강남 출장마사지 예약 전 코스, 요금, 관리 범위, 취소 규정을 투명하게 확인할 수 있도록
               역삼·논현·삼성·청담 권역 중심의 방문 가능 기준을 정리했습니다.
             </p>
