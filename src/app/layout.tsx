@@ -6,6 +6,10 @@ import { HeaderNav } from "@/components/header-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { baseUrl, gangnamAreas, navigation, siteUrl } from "@/lib/areas";
 
+const defaultTitle = "강남 출장마사지 홈타이 | 강남구 지역별 이용 안내";
+const defaultDescription =
+  "강남 출장마사지 홈타이 이용 전 확인할 수 있는 강남구 주요 지역, 이용 절차, 요금 안내, 예약 전 주의사항을 정리했습니다.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   applicationName: "Gangnam Care Guide",
@@ -23,6 +27,19 @@ export const metadata: Metadata = {
   },
   other: {
     "naver-site-verification": "621007e6fdab98f3ffa54fa0686bb423f77cc0c3",
+  },
+  openGraph: {
+    title: defaultTitle,
+    description: defaultDescription,
+    url: siteUrl("/"),
+    siteName: "Gangnam Care Guide",
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: defaultTitle,
+    description: defaultDescription,
   },
 };
 

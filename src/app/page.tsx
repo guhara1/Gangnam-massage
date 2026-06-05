@@ -16,6 +16,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl("/"),
   },
+  openGraph: {
+    title: pageTitle,
+    description: pageDescription,
+    url: siteUrl("/"),
+    siteName: "Gangnam Care Guide",
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
+  },
 };
 
 const trustItems = [
