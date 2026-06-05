@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { AreaLinkGrid, DetailSection, FaqList, LongFormSection, PageHero } from "@/components/page-sections";
+import { AreaLinkGrid } from "@/components/page-sections";
+import { PricingCards } from "@/components/pricing-cards";
 import { gangnamAreas, gangnamOverview, siteUrl } from "@/lib/areas";
-import { gangnamLongForm } from "@/lib/content";
+import { pageContent } from "@/lib/editorial-pages";
 
 export const dynamic = "force-static";
+
+const content = pageContent.gangnam;
 
 export const metadata: Metadata = {
   title: gangnamOverview.title,
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function GangnamPage() {
   return (
-    <main>
+    <main className="bg-[#050503] text-white">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -31,49 +34,81 @@ export default function GangnamPage() {
           },
         }}
       />
-      <PageHero
-        eyebrow="강남구 전체"
-        title={gangnamOverview.h1}
-        description="강남구는 업무지구, 대형 상권, 주거 단지, 역세권 숙소가 함께 있어 이용 장소에 따라 확인해야 할 항목이 달라집니다."
-      />
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <div className="content-grid">
-          <div className="space-y-6">
-            <LongFormSection title="강남구 전체 이용 상세 가이드" paragraphs={gangnamLongForm} />
-            <DetailSection
-              title="생활권별 확인 포인트"
-              items={[
-                "테헤란로 업무권은 야근과 출장 일정이 많아 시작 시간을 여유 있게 잡는 편이 좋습니다.",
-                "압구정, 청담, 신사 일대는 상권과 주거지가 가까워 건물 출입 방식 확인이 중요합니다.",
-                "수서, 세곡, 자곡, 율현 권역은 차량 이동 시간이 길어질 수 있어 사전 예약이 안정적입니다.",
-              ]}
-            />
-            <DetailSection
-              title="예약 전 공통 절차"
-              items={[
-                "이용 장소의 정확한 주소와 건물명, 출입 방법을 확인합니다.",
-                "요금은 코스 시간, 이동 여건, 예약 시간대에 따라 안내받은 뒤 확정합니다.",
-                "법과 이용 규정에 어긋나거나 선정적인 요청은 안내 대상이 아니며 진행하지 않습니다.",
-              ]}
-            />
-            <AreaLinkGrid areas={gangnamAreas} />
+      <section className="relative overflow-hidden border-b border-[#2b2618]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(183,143,74,0.18),transparent_32rem),linear-gradient(135deg,#0a0d09_0%,#050503_62%,#000_100%)]" />
+        <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+          <div className="max-w-5xl">
+            <div className="mb-8 flex items-center gap-4 text-sm font-semibold text-[#c9a45f]">
+              <span className="h-px w-14 bg-[#c9a45f]" />
+              {content.eyebrow}
+            </div>
+            <h1 className="max-w-6xl text-[clamp(3rem,8vw,8rem)] font-black leading-[0.9] tracking-[0] text-white">
+              강남구
+              <span className="mt-4 block text-[#d6b56d]">출장마사지 홈타이 이용 가이드</span>
+            </h1>
+            <p className="mt-10 max-w-3xl border-l border-[#c9a45f] pl-6 text-xl leading-9 text-white sm:text-2xl">
+              {content.lead}
+            </p>
           </div>
-          <FaqList
-            faq={[
-              {
-                question: "강남구 전체 페이지와 동별 페이지는 어떻게 다르나요?",
-                answer: "전체 페이지는 공통 절차를, 동별 페이지는 생활권과 이동 동선, 예약 전 확인사항을 더 구체적으로 다룹니다.",
-              },
-              {
-                question: "요금은 어디에서 확인하나요?",
-                answer: "이용 요금 메뉴에서 기본 기준을 확인하고, 실제 예약 전에는 시간과 위치를 기준으로 다시 안내받는 방식이 좋습니다.",
-              },
-              {
-                question: "당일 문의도 가능한가요?",
-                answer: "가능 여부는 지역과 시간대별 이동 상황에 따라 달라지므로, 정확한 주소 기준으로 확인합니다.",
-              },
-            ]}
-          />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr]">
+          <aside className="h-fit border-t border-[#c9a45f] pt-6">
+            <p className="text-sm font-bold text-[#c9a45f]">WHO · HOW · WHY</p>
+            <h2 className="mt-4 text-4xl font-black leading-tight text-white">강남구 전체를 보는 기준</h2>
+            <ul className="mt-8 space-y-4">
+              {content.checklist.map((item) => (
+                <li key={item} className="border-l border-[#6f5a31] pl-4 text-base leading-7 text-[#d8d0c1]">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </aside>
+          <div className="space-y-8">
+            <p className="text-2xl leading-10 text-white">{content.description}</p>
+            {content.sections.map((section) => (
+              <article key={section.title} className="rounded-md border border-[#2b2618] bg-[#0b0d09] p-6">
+                <h2 className="text-2xl font-black text-[#d6b56d]">{section.title}</h2>
+                <p className="mt-5 text-base leading-8 text-white">{section.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
+        <AreaLinkGrid areas={gangnamAreas} />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
+        <PricingCards />
+      </section>
+
+      <section className="border-y border-[#2b2618] bg-[#090907]">
+        <div className="mx-auto max-w-5xl px-5 py-16 text-center sm:px-8 lg:py-24">
+          <p className="text-sm font-bold text-[#c9a45f]">EDITORIAL NOTE</p>
+          <blockquote className="mt-6 text-3xl font-black leading-tight text-white sm:text-5xl">
+            “{content.quote}”
+          </blockquote>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
+          <div>
+            <p className="text-sm font-bold text-[#c9a45f]">FAQ</p>
+            <h2 className="mt-3 text-4xl font-black text-white">강남구 지역 안내 FAQ</h2>
+          </div>
+          <div className="divide-y divide-[#2b2618] border-y border-[#2b2618]">
+            {content.faq.map((item) => (
+              <details key={item.question} className="py-6">
+                <summary className="cursor-pointer text-xl font-bold text-white">{item.question}</summary>
+                <p className="mt-4 text-base leading-8 text-[#d8d0c1]">{item.answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
     </main>
