@@ -21,10 +21,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-background/95 backdrop-blur">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
-            <Link href="/" className="text-lg font-bold tracking-[0] text-[var(--accent)]">
-              Gangnam Care Guide
+        <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[rgba(15,20,25,0.92)] backdrop-blur-xl">
+          <div className="mx-auto flex min-h-[68px] max-w-[1180px] flex-wrap items-center gap-4 px-5 sm:px-6">
+            <Link href="/" className="text-xl font-extrabold tracking-[0] text-white">
+              Gangnam <span className="text-[var(--accent)]">Care Guide</span>
             </Link>
             <HeaderNav areas={gangnamAreas} navigation={navigation} />
           </div>

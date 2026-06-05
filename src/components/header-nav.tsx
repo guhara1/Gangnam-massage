@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Area } from "@/lib/areas";
 
 type NavigationItem = {
@@ -15,94 +15,133 @@ type HeaderNavProps = {
   navigation: readonly NavigationItem[];
 };
 
+type NavChild = {
+  label: string;
+  href: string;
+  description?: string;
+};
+
+type NavGroup = {
+  label: string;
+  href: string;
+  wide?: boolean;
+  children?: NavChild[];
+};
+
+const courseItems: NavChild[] = [
+  { label: "아로마 릴렉스", href: "/service", description: "오일 기반 휴식 관리" },
+  { label: "스포츠 바디케어", href: "/service", description: "목과 어깨 피로 중심" },
+  { label: "프리미엄 회복 관리", href: "/service", description: "출장과 장거리 이동 후" },
+  { label: "60분 코스", href: "/pricing", description: "짧은 컨디션 정리" },
+  { label: "90분 코스", href: "/pricing", description: "추천 기본 구성" },
+  { label: "120분 코스", href: "/pricing", description: "충분한 휴식 구성" },
+];
+
+const priceItems: NavChild[] = [
+  { label: "60분 기본 요금", href: "/pricing", description: "90,000원 기준" },
+  { label: "90분 추천 요금", href: "/pricing", description: "150,000원 기준" },
+  { label: "120분 프리미엄", href: "/pricing", description: "180,000원 기준" },
+  { label: "최종 비용 확인", href: "/pricing", description: "지역과 시간대별 상담" },
+];
+
+const guideItems: NavChild[] = [
+  { label: "예약 전 준비사항", href: "/guide", description: "주소와 출입 방식 확인" },
+  { label: "장소별 이용 기준", href: "/guide", description: "호텔, 오피스텔, 주거지" },
+  { label: "불가 요청 안내", href: "/service", description: "건전 운영 기준" },
+  { label: "자주 묻는 질문", href: "/guide", description: "처음 이용 전 확인" },
+];
+
 export function HeaderNav({ areas, navigation }: HeaderNavProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  useEffect(() => {
-    function handlePointerDown(event: PointerEvent) {
-      if (!menuRef.current?.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    }
+  const regionItems = areas.map((area) => ({
+    label: area.name,
+    href: `/gangnam/${area.slug}`,
+    description: area.neighborhoods.slice(0, 2).join(" · "),
+  }));
 
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
+  const groups: NavGroup[] = [
+    { label: "홈", href: "/" },
+    { label: "지역별", href: "/gangnam", wide: true, children: [{ label: "강남구 전체", href: "/gangnam", description: "전체 생활권 안내" }, ...regionItems] },
+    { label: "코스별", href: "/service", wide: true, children: courseItems },
+    { label: "가격별", href: "/pricing", children: priceItems },
+    { label: "이용가이드", href: "/guide", children: guideItems },
+    { label: "실시간 후기", href: "/reviews" },
+  ];
 
   return (
-    <nav aria-label="상단 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
-      {navigation.map((item) =>
-        item.href === "/gangnam" ? (
-          <div key={item.href} ref={menuRef} className="relative">
-            <button
-              type="button"
-              aria-expanded={isOpen}
-              aria-controls="gangnam-region-menu"
-              onClick={() => setIsOpen((current) => !current)}
-              className={[
-                "rounded-md px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
-                isOpen
-                  ? "bg-[var(--panel)] text-[var(--accent)]"
-                  : "text-white hover:bg-[var(--panel)] hover:text-[var(--accent)]",
-              ].join(" ")}
-            >
-              {item.label}
-            </button>
-            {isOpen ? (
-              <div
-                id="gangnam-region-menu"
-                className="absolute left-0 top-full mt-2 w-[360px] rounded-md border border-[var(--line)] bg-[var(--panel)] p-3 shadow-xl shadow-black/50"
+    <>
+      <button
+        type="button"
+        aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
+        aria-expanded={isOpen}
+        className="ml-auto flex flex-col gap-1.5 rounded-md p-2 text-white md:hidden"
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        <span className="block h-0.5 w-6 bg-current" />
+        <span className="block h-0.5 w-6 bg-current" />
+        <span className="block h-0.5 w-6 bg-current" />
+      </button>
+
+      <nav
+        aria-label="주요 메뉴"
+        className={[
+          "w-full md:w-auto md:flex-1",
+          isOpen ? "block" : "hidden md:block",
+        ].join(" ")}
+      >
+        <ul className="flex flex-col gap-1 py-3 md:flex-row md:items-center md:justify-end md:gap-1 md:py-0">
+          {groups.map((group) => (
+            <li key={group.href} className="group relative">
+              <Link
+                href={group.href}
+                className="relative flex items-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-[#9aa7b4] transition hover:text-white md:h-[68px] md:py-0"
+                onClick={() => setIsOpen(false)}
               >
-                <div className="grid grid-cols-3 gap-2">
-                  <Link
-                    className="col-span-3 rounded border border-[var(--line)] px-3 py-2 text-center font-semibold text-white hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                    href="/gangnam"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    강남구 전체
-                  </Link>
-                  {areas.map((area) => (
-                    <Link
-                      key={area.slug}
-                      className="whitespace-nowrap rounded px-3 py-2 text-center text-white hover:bg-black hover:text-[var(--accent)]"
-                      href={`/gangnam/${area.slug}`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {area.name}
-                    </Link>
-                  ))}
+                {group.label}
+                {group.children ? <span className="mt-[-3px] text-xs transition group-hover:rotate-180">⌄</span> : null}
+                <span className="absolute bottom-3 left-4 right-4 hidden h-px origin-left scale-x-0 bg-[#d4a574] transition group-hover:scale-x-100 md:block" />
+              </Link>
+
+              {group.children ? (
+                <div
+                  className={[
+                    "static rounded-lg border border-[#28323e] bg-[#161d26] p-2 shadow-2xl shadow-black/40 md:invisible md:absolute md:left-0 md:top-full md:z-50 md:translate-y-2 md:opacity-0 md:transition md:group-hover:visible md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-within:visible md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100",
+                    group.wide ? "md:w-[520px]" : "md:w-[260px]",
+                  ].join(" ")}
+                >
+                  <ul className={group.wide ? "grid gap-1 md:grid-cols-2" : "grid gap-1"}>
+                    {group.children.map((child) => (
+                      <li key={`${group.label}-${child.label}`}>
+                        <Link
+                          href={child.href}
+                          className="block rounded-md px-3 py-2 text-sm font-semibold text-[#d8d0c1] transition hover:bg-[#1e2732] hover:text-[#d4a574]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {child.label}
+                          {child.description ? <small className="mt-1 block text-xs font-normal text-[#7f8b96]">{child.description}</small> : null}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="rounded-md px-3 py-2 font-medium text-white hover:bg-[var(--panel)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-            onClick={() => setIsOpen(false)}
-          >
-            {item.label}
-          </Link>
-        ),
-      )}
-    </nav>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <Link
+        href="/contact"
+        className="hidden rounded-md bg-[#d4a574] px-5 py-3 text-sm font-bold text-[#1a130a] transition hover:-translate-y-0.5 hover:bg-[#e3b888] lg:inline-flex"
+      >
+        업체 등록 문의
+      </Link>
+    </>
   );
 }
