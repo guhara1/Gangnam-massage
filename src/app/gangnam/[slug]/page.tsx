@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
+import { RelatedAreas } from "@/components/page-sections";
 import { PricingCards } from "@/components/pricing-cards";
+import { ReviewList } from "@/components/review-list";
 import { getAreaEditorial } from "@/lib/area-editorials";
 import { getAreaSeo } from "@/lib/area-seo";
 import { gangnamAreas, getArea, siteUrl } from "@/lib/areas";
+import { siteReviews } from "@/lib/reviews";
+import {
+  breadcrumbNode,
+  faqNode,
+  graph,
+  serviceNode,
+  webPageNode,
+} from "@/lib/structured-data";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -57,26 +67,22 @@ export default async function AreaPage({ params }: AreaPageProps) {
 
   const title = `${area.name} 출장마사지 홈타이 안내`;
   const description = `${area.name} 생활권의 이용 장소, 이동 조건, 예약 전 확인사항을 지역 특성에 맞춰 정리했습니다.`;
+  const areaPath = `/gangnam/${area.slug}`;
+  const areaReviews = siteReviews.filter((review) => review.area === area.name);
 
   return (
     <main className="bg-[#050503] text-white">
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          name: title,
-          description,
-          url: siteUrl(`/gangnam/${area.slug}`),
-          inLanguage: "ko-KR",
-          mainEntity: area.faq.map((item) => ({
-            "@type": "Question",
-            name: item.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: item.answer,
-            },
-          })),
-        }}
+        data={graph([
+          webPageNode({ name: title, description, path: areaPath }),
+          breadcrumbNode([
+            { name: "홈", path: "/" },
+            { name: "강남구 지역 안내", path: "/gangnam" },
+            { name: area.name, path: areaPath },
+          ]),
+          serviceNode({ areaName: area.name, reviews: areaReviews }),
+          faqNode(area.faq, siteUrl(areaPath)),
+        ])}
       />
 
       <section className="relative overflow-hidden border-b border-[#2b2618]">
@@ -171,6 +177,14 @@ export default async function AreaPage({ params }: AreaPageProps) {
           </div>
         </div>
       </section>
+
+      {areaReviews.length > 0 ? (
+        <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
+          <ReviewList reviews={areaReviews} heading={`${area.name} 이용 후기`} />
+        </section>
+      ) : null}
+
+      <RelatedAreas current={area} areas={gangnamAreas} />
     </main>
   );
 }

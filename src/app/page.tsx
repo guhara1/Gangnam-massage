@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
+import { AreaLongTailGrid } from "@/components/page-sections";
 import { PricingCards } from "@/components/pricing-cards";
+import { ReviewList } from "@/components/review-list";
 import { gangnamAreas, siteUrl } from "@/lib/areas";
+import { siteReviews } from "@/lib/reviews";
+import {
+  breadcrumbNode,
+  faqNode,
+  graph,
+  serviceNode,
+  webPageNode,
+} from "@/lib/structured-data";
+
+const homeReviews = siteReviews.slice(0, 6);
 
 export const dynamic = "force-static";
 
@@ -83,19 +95,15 @@ const faqs = [
 ];
 
 export default function HomePage() {
-  const visibleAreas = gangnamAreas.slice(0, 12);
-
   return (
     <main className="bg-[#050503] text-white">
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: pageTitle,
-          url: siteUrl("/"),
-          description: pageDescription,
-          inLanguage: "ko-KR",
-        }}
+        data={graph([
+          webPageNode({ name: pageTitle, description: pageDescription, path: "/" }),
+          breadcrumbNode([{ name: "홈", path: "/" }]),
+          serviceNode({ withAggregate: true, reviews: homeReviews }),
+          faqNode(faqs, siteUrl("/")),
+        ])}
       />
 
       <section className="relative overflow-hidden border-b border-[#2b2618]">
@@ -179,21 +187,23 @@ export default function HomePage() {
       </section>
 
       <section className="bg-[#0a0a07]">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
-          <div>
-            <p className="text-sm font-bold text-[#c9a45f]">AREA</p>
-            <h2 className="mt-3 text-4xl font-black leading-tight text-white">강남구 지역별 안내</h2>
-            <p className="mt-6 text-lg leading-9 text-[#d8d0c1]">
-              동별 페이지는 지역명만 바꾼 복사 문서가 아니라, 생활권과 이동 동선, 예약 전 확인사항을 다르게 정리했습니다.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {visibleAreas.map((area) => (
-              <Link key={area.slug} href={`/gangnam/${area.slug}`} className="rounded-md border border-[#2b2618] bg-[#050503] px-5 py-4 text-center font-bold text-white hover:border-[#d6b56d] hover:text-[#d6b56d]">
-                {area.name}
-              </Link>
-            ))}
-          </div>
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+          <AreaLongTailGrid areas={gangnamAreas} />
+          <p className="mt-8 text-base leading-8 text-[#d8d0c1]">
+            동별 페이지는 지역명만 바꾼 복사 문서가 아니라, 생활권과 이동 동선, 예약 전 확인사항을 다르게 정리했습니다.{" "}
+            <Link href="/gangnam" className="font-bold text-[#d6b56d] hover:text-[#f0d58a]">
+              강남구 전체 지역 안내 보기 →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+        <ReviewList reviews={siteReviews} limit={6} />
+        <div className="mt-8">
+          <Link href="/reviews" className="inline-flex items-center gap-2 text-sm font-bold text-[#d6b56d] hover:text-[#f0d58a]">
+            전체 후기 보기 <span aria-hidden>→</span>
+          </Link>
         </div>
       </section>
 

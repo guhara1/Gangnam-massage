@@ -16,5 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default function PricingPage() {
-  return <EditorialPage path="/pricing" {...content} />;
+  return (
+    <EditorialPage
+      path="/pricing"
+      breadcrumb={[
+        { name: "홈", path: "/" },
+        { name: "이용 요금", path: "/pricing" },
+      ]}
+      {...content}
+    />
+  );
 }

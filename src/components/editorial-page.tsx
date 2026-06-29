@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { PricingCards } from "@/components/pricing-cards";
+import { ReviewList } from "@/components/review-list";
 import { siteUrl } from "@/lib/areas";
+import type { SiteReview } from "@/lib/reviews";
+import {
+  breadcrumbNode,
+  faqNode,
+  graph,
+  serviceNode,
+  webPageNode,
+} from "@/lib/structured-data";
 
 type EditorialPageProps = {
   eyebrow: string;
@@ -14,6 +23,9 @@ type EditorialPageProps = {
   checklist: readonly string[];
   faq?: readonly { question: string; answer: string }[];
   showPricing?: boolean;
+  pageType?: string;
+  breadcrumb?: { name: string; path: string }[];
+  reviews?: readonly SiteReview[];
 };
 
 export function EditorialPage({
@@ -27,19 +39,32 @@ export function EditorialPage({
   checklist,
   faq = [],
   showPricing = false,
+  pageType = "WebPage",
+  breadcrumb,
+  reviews,
 }: EditorialPageProps) {
+  const crumbs = breadcrumb ?? [
+    { name: "홈", path: "/" },
+    { name: title, path },
+  ];
+  const schemaNodes: Record<string, unknown>[] = [
+    webPageNode({ name: title, description, path, type: pageType }),
+    breadcrumbNode(crumbs),
+  ];
+  if (faq.length > 0) {
+    schemaNodes.push(faqNode(faq, siteUrl(path)));
+  }
+  if (reviews && reviews.length > 0) {
+    // 후기가 화면에 노출되는 페이지에서만 평점/리뷰 스키마를 함께 제공합니다.
+    schemaNodes.push(serviceNode({ withAggregate: true, reviews }));
+  } else if (showPricing) {
+    // 요금(오퍼) 정보가 노출되는 페이지에는 오퍼 카탈로그 중심 Service 스키마를 제공합니다.
+    schemaNodes.push(serviceNode());
+  }
+
   return (
     <main className="bg-[#050503] text-white">
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: title,
-          description,
-          url: siteUrl(path),
-          inLanguage: "ko-KR",
-        }}
-      />
+      <JsonLd data={graph(schemaNodes)} />
       <section className="relative overflow-hidden border-b border-[#2b2618]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(183,143,74,0.18),transparent_32rem),linear-gradient(135deg,#0a0d09_0%,#050503_62%,#000_100%)]" />
         <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
@@ -82,6 +107,12 @@ export function EditorialPage({
           </div>
         </div>
       </section>
+
+      {reviews && reviews.length > 0 ? (
+        <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
+          <ReviewList reviews={reviews} />
+        </section>
+      ) : null}
 
       {showPricing ? (
         <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">

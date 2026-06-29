@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.svg",
   },
   other: {
-    "naver-site-verification": "621007e6fdab98f3ffa54fa0686bb423f77cc0c3",
+    "naver-site-verification": "28f2bf4a22319a31dd02e3feebc92f0b6a2a0ba8",
   },
   openGraph: {
     title: defaultTitle,

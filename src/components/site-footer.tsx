@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { gangnamAreas, siteUrl } from "@/lib/areas";
+import { gangnamAreas } from "@/lib/areas";
+import { graph, organizationNode, websiteNode } from "@/lib/structured-data";
 
 const serviceLinks = [
   { label: "서비스 안내", href: "/service" },
@@ -22,28 +23,7 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-[#28323e] bg-[#080b0d] text-[#d8d0c1]">
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Gangnam Care Guide",
-          url: siteUrl("/"),
-          logo: siteUrl("/favicon.svg"),
-          areaServed: {
-            "@type": "AdministrativeArea",
-            name: "서울특별시 강남구",
-          },
-          contactPoint: contactPhone
-            ? {
-                "@type": "ContactPoint",
-                telephone: contactPhone,
-                contactType: "customer support",
-                areaServed: "KR",
-                availableLanguage: ["ko"],
-              }
-            : undefined,
-        }}
-      />
+      <JsonLd data={graph([organizationNode(), websiteNode()])} />
 
       <div className="mx-auto max-w-[1180px] px-5 py-14 sm:px-6 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr_1.4fr]">

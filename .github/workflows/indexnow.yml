@@ -19,7 +19,7 @@ jobs:
 
       - name: Wait for IndexNow key file
         env:
-          KEY_URL: https://gangnam-massage-5fy.pages.dev/e926d9ebeec34dd196aee0797ea4bf3d.txt
+          KEY_URL: https://gangnam-massage.netlify.app/e926d9ebeec34dd196aee0797ea4bf3d.txt
         run: |
           for i in {1..30}; do
             if curl --fail --silent "$KEY_URL" | grep -q "e926d9ebeec34dd196aee0797ea4bf3d"; then
@@ -34,6 +34,6 @@ jobs:
 
       - name: Submit updated URLs
         env:
-          SITE_URL: https://gangnam-massage-5fy.pages.dev/
+          SITE_URL: https://gangnam-massage.netlify.app/
           INDEXNOW_KEY: e926d9ebeec34dd196aee0797ea4bf3d
         run: npm run indexnow

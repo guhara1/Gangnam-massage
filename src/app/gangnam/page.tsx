@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { AreaLinkGrid } from "@/components/page-sections";
+import { AreaLongTailGrid } from "@/components/page-sections";
 import { PricingCards } from "@/components/pricing-cards";
 import { gangnamAreas, gangnamOverview, siteUrl } from "@/lib/areas";
 import { pageContent } from "@/lib/editorial-pages";
+import {
+  breadcrumbNode,
+  faqNode,
+  graph,
+  itemListNode,
+  webPageNode,
+} from "@/lib/structured-data";
 
 export const dynamic = "force-static";
 
@@ -21,18 +28,22 @@ export default function GangnamPage() {
   return (
     <main className="bg-[#050503] text-white">
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          name: gangnamOverview.title,
-          description: gangnamOverview.description,
-          url: siteUrl("/gangnam"),
-          inLanguage: "ko-KR",
-          about: {
-            "@type": "AdministrativeArea",
-            name: "강남구",
-          },
-        }}
+        data={graph([
+          webPageNode({
+            name: gangnamOverview.title,
+            description: gangnamOverview.description,
+            path: "/gangnam",
+            type: "CollectionPage",
+          }),
+          breadcrumbNode([
+            { name: "홈", path: "/" },
+            { name: "강남구 지역 안내", path: "/gangnam" },
+          ]),
+          itemListNode(
+            gangnamAreas.map((area) => ({ name: area.name, path: `/gangnam/${area.slug}` })),
+          ),
+          faqNode(content.faq, siteUrl("/gangnam")),
+        ])}
       />
       <section className="relative overflow-hidden border-b border-[#2b2618]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(183,143,74,0.18),transparent_32rem),linear-gradient(135deg,#0a0d09_0%,#050503_62%,#000_100%)]" />
@@ -77,7 +88,7 @@ export default function GangnamPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
-        <AreaLinkGrid areas={gangnamAreas} />
+        <AreaLongTailGrid areas={gangnamAreas} />
       </section>
 
       <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 lg:pb-24">
