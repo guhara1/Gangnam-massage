@@ -16,5 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default function ServicePage() {
-  return <EditorialPage path="/service" {...content} />;
+  return (
+    <EditorialPage
+      path="/service"
+      breadcrumb={[
+        { name: "홈", path: "/" },
+        { name: "서비스 안내", path: "/service" },
+      ]}
+      {...content}
+    />
+  );
 }

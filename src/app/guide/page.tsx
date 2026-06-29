@@ -16,5 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default function GuidePage() {
-  return <EditorialPage path="/guide" {...content} />;
+  return (
+    <EditorialPage
+      path="/guide"
+      breadcrumb={[
+        { name: "홈", path: "/" },
+        { name: "이용 가이드", path: "/guide" },
+      ]}
+      {...content}
+    />
+  );
 }

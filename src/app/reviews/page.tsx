@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EditorialPage } from "@/components/editorial-page";
 import { pageContent } from "@/lib/editorial-pages";
+import { siteReviews } from "@/lib/reviews";
 import { siteUrl } from "@/lib/areas";
 
 export const dynamic = "force-static";
@@ -16,5 +17,15 @@ export const metadata: Metadata = {
 };
 
 export default function ReviewsPage() {
-  return <EditorialPage path="/reviews" {...content} />;
+  return (
+    <EditorialPage
+      path="/reviews"
+      breadcrumb={[
+        { name: "홈", path: "/" },
+        { name: "실시간 후기", path: "/reviews" },
+      ]}
+      reviews={siteReviews}
+      {...content}
+    />
+  );
 }

@@ -16,5 +16,15 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return <EditorialPage path="/contact" {...content} />;
+  return (
+    <EditorialPage
+      path="/contact"
+      pageType="ContactPage"
+      breadcrumb={[
+        { name: "홈", path: "/" },
+        { name: "예약 문의", path: "/contact" },
+      ]}
+      {...content}
+    />
+  );
 }

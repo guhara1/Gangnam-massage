@@ -87,6 +87,112 @@ export function AreaLinkGrid({ areas }: AreaLinkGridProps) {
   );
 }
 
+type AreaLongTailGridProps = {
+  areas: Area[];
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+};
+
+// 지역명만 나열하는 대신 생활권 키워드를 앵커 텍스트에 담아 롱테일 내부링크를 강화합니다.
+export function AreaLongTailGrid({
+  areas,
+  eyebrow = "AREA · LONG-TAIL",
+  title = "강남구 지역별 출장마사지 홈타이 안내",
+  description = "각 지역 페이지는 생활권, 이동 동선, 예약 전 확인사항을 따로 정리했습니다. 이용 장소와 가까운 지역을 선택해 세부 안내를 확인하세요.",
+}: AreaLongTailGridProps) {
+  return (
+    <section>
+      <div className="mb-8 flex flex-col gap-4 border-b border-[#2b2618] pb-8 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p className="text-sm font-bold text-[#c9a45f]">{eyebrow}</p>
+          <h2 className="mt-3 text-3xl font-black text-white sm:text-4xl">{title}</h2>
+        </div>
+        <p className="max-w-xl text-base leading-7 text-[#cfc6b4]">{description}</p>
+      </div>
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {areas.map((area) => (
+          <li key={area.slug}>
+            <Link
+              href={`/gangnam/${area.slug}`}
+              className="group flex h-full flex-col rounded-md border border-[#2b2618] bg-[#0b0d09] p-5 transition hover:border-[#d6b56d] hover:bg-[#11100b]"
+            >
+              <span className="text-lg font-black text-white group-hover:text-[#d6b56d]">
+                {area.name} 출장마사지 홈타이
+              </span>
+              <span className="mt-2 text-sm leading-6 text-[#cfc6b4]">
+                {area.neighborhoods.join(" · ")}
+              </span>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#c9a45f] group-hover:text-[#f0d58a]">
+                {area.name} 이용 안내 보기
+                <span aria-hidden>→</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+type RelatedAreasProps = {
+  current: Area;
+  areas: Area[];
+};
+
+// 지역 페이지 하단에서 인접/다른 생활권으로 이동하는 롱테일 내부링크 묶음입니다.
+export function RelatedAreas({ current, areas }: RelatedAreasProps) {
+  const others = areas.filter((area) => area.slug !== current.slug);
+  const currentIndex = areas.findIndex((area) => area.slug === current.slug);
+  const nearby = [...others]
+    .sort(
+      (a, b) =>
+        Math.abs(areas.indexOf(a) - currentIndex) - Math.abs(areas.indexOf(b) - currentIndex),
+    )
+    .slice(0, 6);
+
+  return (
+    <section className="border-t border-[#2b2618] bg-[#090907]">
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
+        <p className="text-sm font-bold text-[#c9a45f]">RELATED AREAS</p>
+        <h2 className="mt-3 text-3xl font-black text-white sm:text-4xl">{current.name} 주변 지역 안내</h2>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[#cfc6b4]">
+          {current.name}과 함께 자주 비교되는 강남구 생활권입니다. 이동 동선과 예약 조건이 다르니 가까운 지역도 함께 확인하세요.
+        </p>
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {nearby.map((area) => (
+            <li key={area.slug}>
+              <Link
+                href={`/gangnam/${area.slug}`}
+                className="group flex flex-col rounded-md border border-[#2b2618] bg-[#050503] p-5 transition hover:border-[#d6b56d]"
+              >
+                <span className="font-black text-white group-hover:text-[#d6b56d]">
+                  {area.name} 출장마사지 홈타이
+                </span>
+                <span className="mt-2 text-sm leading-6 text-[#cfc6b4]">{area.neighborhoods.join(" · ")}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-8 flex flex-wrap gap-3 text-sm font-bold">
+          <Link href="/gangnam" className="rounded-full border border-[#8e7440] px-5 py-3 text-[#f0d58a] hover:border-[#d6b56d] hover:bg-[#11100b]">
+            강남구 전체 지역 보기
+          </Link>
+          <Link href="/pricing" className="rounded-full border border-[#8e7440] px-5 py-3 text-[#f0d58a] hover:border-[#d6b56d] hover:bg-[#11100b]">
+            코스별 요금 보기
+          </Link>
+          <Link href="/guide" className="rounded-full border border-[#8e7440] px-5 py-3 text-[#f0d58a] hover:border-[#d6b56d] hover:bg-[#11100b]">
+            이용 가이드 보기
+          </Link>
+          <Link href="/reviews" className="rounded-full border border-[#8e7440] px-5 py-3 text-[#f0d58a] hover:border-[#d6b56d] hover:bg-[#11100b]">
+            실시간 후기 보기
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 type DetailSectionProps = {
   title: string;
   items: string[];
