@@ -1,4 +1,4 @@
-const site = new URL(process.env.SITE_URL ?? "https://gangnam-massage-5fy.pages.dev/");
+const site = new URL(process.env.SITE_URL ?? "https://gangnam-massage.netlify.app/");
 const host = site.host;
 const key = process.env.INDEXNOW_KEY ?? "e926d9ebeec34dd196aee0797ea4bf3d";
 const keyLocation = new URL(`/${key}.txt`, site).toString();
